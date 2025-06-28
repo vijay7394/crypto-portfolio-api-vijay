@@ -1,6 +1,7 @@
 # Node modules
 node_modules/
 ecosystem.config.js
+package-lock.json
 # Logs
 logs/
 *.log

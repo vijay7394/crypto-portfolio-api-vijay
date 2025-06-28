@@ -4,6 +4,7 @@ This is a secure backend API to manage crypto holdings, simulate buy/sell, and f
 
 ---
 
+
 ## 🧰 Tech Stack
 
 - **Backend**: Node.js, Express.js
@@ -13,7 +14,10 @@ This is a secure backend API to manage crypto holdings, simulate buy/sell, and f
 - **Security**: Helmet, express-rate-limit, xss-clean, express-mongo-sanitize
 - **Process Manager**: PM2
 
----
+
+## Version
+- **node**: v22.16.0
+- **Npm**: 10.9.2
 
 ## 📦 Key Features
 
