@@ -35,7 +35,6 @@ This is a secure backend API to manage crypto holdings, simulate buy/sell, and f
 
 ## 📁 Project Structure
 
-```bash
 crypto-portfolio-api-vijay/
 ├── app.js                 # Main server entry
 ├── config/                # MongoDB config
@@ -51,17 +50,21 @@ crypto-portfolio-api-vijay/
 ├── README.md              # This file
 ├── package.json
 
+---
 
 ## 🛠 Setup Instructions
 
+---
 ### 1. Clone Repo
 ```bash
 git clone https://github.com/vijay7394/crypto-portfolio-api-vijay.git
 cd crypto-portfolio-api-vijay
+---
 
 ### 2. Install Package
-```bash
 npm install
+
+---
 
 ### 3. gitinore file
 ```bash
