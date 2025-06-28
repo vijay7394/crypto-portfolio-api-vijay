@@ -52,6 +52,8 @@ crypto-portfolio-api-vijay/
 
 ---
 
+---
+
 ## 🛠 Setup Instructions
 
 ---
@@ -59,17 +61,14 @@ crypto-portfolio-api-vijay/
 ```bash
 git clone https://github.com/vijay7394/crypto-portfolio-api-vijay.git
 cd crypto-portfolio-api-vijay
----
+
 
 ### 2. Install Package
 npm install
 
 ---
 
-### 3. gitinore file
-```bash
-npm install
+### 3. gitinore file placed in root path
+.env
+ecosystem.config.js
 
-### 2. Install Package
-```bash
-npm install
