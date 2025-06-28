@@ -1,6 +1,3 @@
-# crypto-portfolio-api-vijay
-cryptocurrency portfolio management systems
-
 # Crypto Portfolio Management API
 
 This is a secure backend API to manage crypto holdings, simulate buy/sell, and fetch live prices via CoinGecko.
@@ -45,7 +42,6 @@ crypto-portfolio-api-vijay/
 ├── routes/                # API route groups
 ├── utils/                 # Helpers (redis, serializer)
 ├── public/                # Static files (optional)
-├── .env.example           # Sample environment file
 ├── ecosystem.config.js    # PM2 config (ignored in Git)
 ├── README.md              # This file
 ├── package.json
@@ -69,36 +65,64 @@ npm install
 
 - gitignore file placed in root path
 
-    .env
+  ecosystem.config.js file in root path create and paste the code
+```
+module.exports = {
+	apps: [{
+		name: "Crypto Portfolio Api",
+		script: "./app.js",
+		watch: '.',
+		ignore_watch: ["logs/*"],
+		log: './logs/combained.outerr.log',
+		err_file: "./logs/error.log",
 
-    ecosystem.config.js
+		env_production: {
+			NODE_ENV: "production",
+			DATABASE: "mongodb://<live_host>:<live_port>/Crypto-Portfolio",  //Live Secret Key
+			PORT: 8080,
+			REDIS_HOST: "redis://<live_host>:<live_port>",
+			CGECKO_API: "https://api.coingecko.com/api/v3",
+			JWT_SECRET: "your_jwt_secret", //Live Secret Key
+			JWT_EXPIRE: "1h",
+			ORGINS: ['http://<live_frontend_host>:<live_frontend_port>'] //set origin
+		},
+		env_development: {
+			NODE_ENV: "development",
+			DATABASE: "mongodb://localhost:27017/Crypto-Portfolio", 
+			PORT: 8050,
+			REDIS_HOST: "redis://localhost:6379", //Live Redis URL
+			CGECKO_API: "https://api.coingecko.com/api/v3",
+			JWT_SECRET: "your_jwt_secret",  
+			JWT_EXPIRE: "1h",
+			ORGINS: ['http://localhost:8000'] //set origin
+		}
+	}]
+}
+```
 
-- Install Redis 
 
-    ## Linux/macOS:
+## Install Redis:
 
-    ### Ubuntu/Debian
-    ```
+### Ubuntu/Debian
     sudo apt install redis  
-    ### macOS
-    ```
+    
+### macOS
     brew install redis
-    ### Run Redis
-    ```
+
+### Run Redis
     redis-server               
-    ```
 
-    ## Windows:
-    Download from: https://github.com/microsoftarchive/redis/releases
+## Windows:
+Download from: https://github.com/microsoftarchive/redis/releases
 
-    Run redis-server.exe from extracted folder.
+Run redis-server.exe from extracted folder.
 
-    ## Check Connection
-    ```
+## Check Connection
+   
     redis-cli ping
-  ```  
+ 
 
-- Run the project in Development
+## Run the project in Development
 ```
     # Install PM2 globally (if not already installed)
     npm install -g pm2
@@ -141,9 +165,9 @@ npm install
 
 
 ### After Login HEADER:
-Authorization: Bearer <your_token>
+- Authorization: Bearer <your_token>
 
-Content-Type: application/json
+- Content-Type: application/json
 
 ### 🧪 Body Type (Important)
 
@@ -157,4 +181,11 @@ Example:  /api/holdings/buy
   "symbol": "BTC",
   "amount": 0.001
 }
+```
 
+### Handled:
+- 200 OK
+- 404 Not Found
+- 500 Internal
+- 401 Unauthorized
+- 400 Bad Request
