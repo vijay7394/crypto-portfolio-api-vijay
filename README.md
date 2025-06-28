@@ -34,7 +34,7 @@ This is a secure backend API to manage crypto holdings, simulate buy/sell, and f
 ---
 
 ## 📁 Project Structure
-
+```bash
 crypto-portfolio-api-vijay/
 ├── app.js                 # Main server entry
 ├── config/                # MongoDB config
