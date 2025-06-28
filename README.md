@@ -71,7 +71,7 @@ npm install
     .env
     ecosystem.config.js
 
-- Build and run the project
+- Run the project in Development
 ```
     # Install PM2 globally (if not already installed)
     npm install -g pm2
@@ -82,37 +82,48 @@ npm install
     # Start the app using the ecosystem config file in production
     pm2 start ecosystem.config.js -- env production
 
+    # View logs
+    pm2 logs
 
-    # Show list of running apps
-    pm2 list
+    # Restart the app (if needed)
+    pm2 restart ecosystem.config.js -- env development
+
+    # Stop the app
+    pm2 stop ecosystem.config.js -- env development
+
+    # All processes and PM2's memory will be cleared
+    pm2 kill
+
+    # Clear Log Files
+    pm2 flush
+
+```
+
+- Run the project in Development
+```
+    # Install PM2 globally (if not already installed)
+    npm install -g pm2
+
+    # Start the app using the ecosystem config file
+    pm2 start ecosystem.config.js -- env development
+
+    # Start the app using the ecosystem config file in production
+    pm2 start ecosystem.config.js -- env production
 
     # View logs
     pm2 logs
 
     # Restart the app (if needed)
-    pm2 restart ecosystem.config.js
+    pm2 restart ecosystem.config.js -- env development
 
     # Stop the app
-    pm2 stop ecosystem.config.js
+    pm2 stop ecosystem.config.js -- env development
+
+    # All processes and PM2's memory will be cleared
+    pm2 kill
+
+    # Clear Log Files
+    pm2 flush
 
 ```
-
-
-
-
----
-### 1. Clone Repo
-```bash
-git clone https://github.com/vijay7394/crypto-portfolio-api-vijay.git
-cd crypto-portfolio-api-vijay
-
-
-### 2. Install Package
-npm install
-
----
-
-### 3. gitinore file placed in root path
-.env
-ecosystem.config.js
 
