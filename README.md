@@ -50,11 +50,55 @@ crypto-portfolio-api-vijay/
 ├── README.md              # This file
 ├── package.json
 
----
+```
 
----
+
 
 ## 🛠 Setup Instructions
+
+- Clone the repository
+```
+git clone  <git lab template url> <project_name>
+```
+
+- Install dependencies
+```
+cd <project_name>
+npm install
+```
+
+- gitignore file placed in root path
+    .env
+    ecosystem.config.js
+
+- Build and run the project
+```
+    # Install PM2 globally (if not already installed)
+    npm install -g pm2
+
+    # Start the app using the ecosystem config file
+    pm2 start ecosystem.config.js -- env development
+
+    # Start the app using the ecosystem config file in production
+    pm2 start ecosystem.config.js -- env production
+
+
+    # Show list of running apps
+    pm2 list
+
+    # View logs
+    pm2 logs
+
+    # Restart the app (if needed)
+    pm2 restart ecosystem.config.js
+
+    # Stop the app
+    pm2 stop ecosystem.config.js
+
+```
+
+
+
 
 ---
 ### 1. Clone Repo
