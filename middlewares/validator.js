@@ -1,4 +1,5 @@
 const { check, validationResult } = require('express-validator');
+const Userschema = require('../models/user.model');
 const helper = require('../helper/common_helper');
 
 exports.userValidationResult = (req, res, next) => {
@@ -31,15 +32,42 @@ exports.register = [
 	check('username').trim().not().isEmpty().withMessage("Username is required").isAlphanumeric().withMessage("Username should be in alphanumeric").isLength({
 		min: 3,
 		max: 15
-	}).withMessage("username must be between 3 and 15 characters"),
-	check('email').trim().not().isEmpty().withMessage("Email address is required").isEmail().withMessage("Please enter valid email address").custom(async (value) => {
-		let emailCheck = await helper.checkValidEmail(value)
-		if (emailCheck == true) {
-			throw new Error('Please enter valid email address')
+	}).withMessage("username must be between 3 and 15 characters").custom(async (username) => {
+      const existingUser = await Userschema.findOne({ username: username.toLowerCase() }).select(username);
+      if (existingUser) {
+        throw new Error("Username already exists");
+      }
+      return true;
+    }),
+	check('email')
+	.trim()
+	.notEmpty().withMessage("Email address is required")
+	.isEmail().withMessage("Please enter valid email address")
+	.custom(async (value) => {
+		const emailCheck = await helper.checkValidEmail(value);
+		if (emailCheck === true) {
+		throw new Error("Please enter valid email address");
 		}
-		return true
+
+		const user = await Userschema.findOne({ email: value.toLowerCase() }).select("email");
+		if (user) {
+		throw new Error("Email already exists");
+		}
+
+		return true;
 	}),
-	check('phone').trim().not().isEmpty().withMessage("Mobile number is required").isNumeric().withMessage("Mobile field must contain only Numerical characters"),
+
+	check('phone').trim().not().isEmpty().withMessage("Mobile number is required").isNumeric().withMessage("Mobile field must contain only Numerical characters").isLength({
+		min: 10,
+		max: 12
+	}).withMessage("Phone number must be between 10 and 12 characters").custom(async (phone) => {
+      const existingPhone = await Userschema.findOne({ phone }).select(phone);
+      if (existingPhone) {
+        throw new Error("Phone number already exists");
+      }
+      return true;
+    }),
+
 	check('password').trim().not().isEmpty().withMessage("Password is required").isLength({
 		min: 7
 	}, {
@@ -72,15 +100,39 @@ exports.login = [
 // Buy
 exports.validateBuy = [
 	check('symbol').trim().notEmpty().withMessage("Symbol is required").isIn(['BTC', 'ETH', 'TRX', 'BNB', 'USDT']).withMessage("Invalid cryptocurrency symbol"),
-	check('amount').notEmpty().withMessage("Amount is required").isFloat({
-		gt: 0.0000001
-	}).withMessage("Amount must be a number greater than 0"),
+	check('amount').notEmpty().withMessage("Amount is required").custom((value) => {
+    const floatVal = parseFloat(value);
+	const valueStr = value.toString();
+    if (isNaN(floatVal)) {
+      throw new Error("Amount must be a valid number");
+    }
+    if (floatVal <= 0.0001 || floatVal > 1000000) {
+      throw new Error("Amount must be between 0.0001 and 1,000,000");
+    }
+    if (valueStr.includes('.') && valueStr.split('.')[1].length > 8) {
+      throw new Error("Amount cannot have more than 8 decimal places");
+    }
+
+    return true;
+  })
 ]
 
 // Sell
 exports.validateSell = [
 	check('symbol').trim().notEmpty().withMessage("Symbol is required").isIn(['BTC', 'ETH', 'TRX', 'BNB', 'USDT']).withMessage("Invalid cryptocurrency symbol"),
-	check('amount').notEmpty().withMessage("Amount is required").isFloat({
-		gt: 0.0000001
-	}).withMessage("Amount must be a number greater than 0"),
+	check('amount').notEmpty().withMessage("Amount is required").withMessage("Amount is required").custom((value) => {
+    const floatVal = parseFloat(value);
+	const valueStr = value.toString();
+    if (isNaN(floatVal)) {
+      throw new Error("Amount must be a valid number");
+    }
+    if (floatVal <= 0.0001 || floatVal > 1000000) {
+      throw new Error("Amount must be between 0.0001 and 1,000,000");
+    }
+    if (valueStr.includes('.') && valueStr.split('.')[1].length > 8) {
+      throw new Error("Amount cannot have more than 8 decimal places");
+    }
+
+    return true;
+  })
 ]

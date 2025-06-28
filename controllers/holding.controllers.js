@@ -39,7 +39,7 @@ exports.buy = async (req, res) => {
       holding = await Holding.create({ user_id: userId, data: serialized });
     }
 
-    return res.status(200).json({ status: true, message: "Buy successful", data: balances});
+    return res.status(200).json({ status: true, message: "Buy Swap successful", data: balances});
   } catch (err) {
     return res.status(500).json({ status: false, message: "Server error", error: err.message });
   }

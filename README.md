@@ -132,16 +132,16 @@ Run redis-server.exe from extracted folder.
     npm install -g pm2
 
     # Start the app using the ecosystem config file local envirainment
-    pm2 start ecosystem.config.js -- env development
+    pm2 start ecosystem.config.js --env development
 
-    # View logs
-    pm2 logs
+    # View logs and server start logs
+    pm2 logs 0
 
     # Restart the app (if needed)
-    pm2 restart ecosystem.config.js -- env development
+    pm2 restart ecosystem.config.js --env development
 
     # Stop the app
-    pm2 stop ecosystem.config.js -- env development
+    pm2 stop ecosystem.config.js --env development
 
     # All processes and PM2's memory will be cleared
     pm2 kill
@@ -193,3 +193,4 @@ Example:  /api/holdings/buy
 - 500 Internal
 - 401 Unauthorized
 - 400 Bad Request
+- 422 Unprocessable Entity

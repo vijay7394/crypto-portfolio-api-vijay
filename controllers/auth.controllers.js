@@ -12,8 +12,8 @@ exports.register = async (req, res) => {
 		let params = req.body;
 
 		var ip = req.socket.remoteAddress;
-		var username = params.username ? await clean.removeXss(params.username) : '';
-		var email = params.email ? await clean.removeXss(params.email.toLowerCase()) : '';
+		var username = params.username ? await clean.removeXss(params.username).toLowerCase() : '';
+		var email = params.email ? await clean.removeXss(params.email.toLowerCase()).toLowerCase() : '';
 		var phone = params.phone ? await clean.removeXss(params.phone.toString()) : 0;
 		var password = params.password ? await clean.removeXss(params.password) : '';
 		let Browser = browser(req.headers['user-agent']).name ? browser(req.headers['user-agent']).name : "unknown";
@@ -71,15 +71,15 @@ exports.login = async (req, res) => {
 
 		// Compare password
          if (!user || !(await user.comparePassword(params.password))) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return res.status(400).json({status: false, message: 'Invalid credentials' });
         }
 
 		// Generate JWT Token
 		const token = generateToken({userId: user.userId,username: user.username});
-		return res.status(200).json({status: true, message: 'Login successful',token });
+		return res.status(200).json({status: true, message: 'Login successful',token,user_id : user.userId });
 
 	} catch (err) {
-		console.error('Login error:', error);
+		console.error('Login error:', err);
 		return res.status(500).json({ status: false, message: 'Server error',error : err.message });
 	}
 };
