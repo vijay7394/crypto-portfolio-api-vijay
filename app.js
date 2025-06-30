@@ -14,10 +14,10 @@ const compression = require('compression');
 const connectDB = require('./config/database');
 
 const app = express();
-const port = process.env.PORT || 5000;
-
 //Connect MongoDB
 connectDB();
+
+const port = process.env.PORT || 5000;
 
 app.use(helmet());   //Security headers
 app.use(cors({
